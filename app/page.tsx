@@ -4,9 +4,9 @@ export default function Home() {
   return (
     <>
     <div className="text-4xl text-rose-500">
-      HOMW
+      HOME
     </div>
-      <Button>Click me!</Button>
+      <Button>Sign in</Button>
     </>
   );
 }
