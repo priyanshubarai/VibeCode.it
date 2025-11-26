@@ -22,7 +22,9 @@ export default async function Home() {
       <div className="text-4xl text-rose-500">HOME</div>
       <SignIn />
       <SignOut />
-      <UserAvatar session={session} />
+      {session && (
+        <UserAvatar session={session} />
+      )}
     </div>
   );
 }
