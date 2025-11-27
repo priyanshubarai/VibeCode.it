@@ -18,13 +18,12 @@ export default async function Home() {
   console.log("session from page.jsx : ", session);
 
   return (
-    <div className="flex-col justify-items-center gap-6">
+    <div className="flex flex-col items-center gap-2">
       <div className="text-4xl text-rose-500">HOME</div>
-      <SignIn />
+      <SignIn provider={"Github"} />
+      <SignIn provider={"Google"} />
       <SignOut />
-      {session && (
-        <UserAvatar session={session} />
-      )}
+      {session && <UserAvatar session={session} />}
     </div>
   );
 }

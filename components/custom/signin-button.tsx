@@ -2,15 +2,15 @@
 import { signIn } from "@/lib/auth"
 import { Button } from "../ui/button"
  
-export default function SignIn() {
+export default function SignIn(prop : {provider : string}) {
   return (
     <form
       action={async () => {
         "use server"
-        await signIn("github")
+        await signIn(prop.provider.toLowerCase())
       }}
     >
-      <Button type="submit">Signin with GitHub</Button>
+      <Button type="submit">Signin with {prop.provider}</Button>
     </form>
   )
 } 
