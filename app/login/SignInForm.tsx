@@ -14,6 +14,7 @@ import { signIn } from "@/lib/auth";
 import { Chromium, Github } from "lucide-react";
 import Link from "next/link";
 
+
 export function SignInForm() {
   return (
     <Card className="w-full max-w-sm">
@@ -29,7 +30,10 @@ export function SignInForm() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form>
+        <form action={async(formData)=>{
+          "use server";
+          await signIn("credentials",formData)
+        }}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
