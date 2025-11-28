@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { signIn } from "@/lib/auth";
 import { Chromium, Github } from "lucide-react";
 import Link from "next/link";
-
+import { login } from "@/lib/action/user";
 
 export function SignInForm() {
   return (
@@ -30,10 +32,7 @@ export function SignInForm() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form action={async(formData)=>{
-          "use server";
-          await signIn("credentials",formData)
-        }}>
+        <form id="login-form" action={login}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -65,7 +64,7 @@ export function SignInForm() {
         </form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
+        <Button form="login-form" type="submit" className="w-full">
           Login
         </Button>
         {/* login other options */}

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import type { Session } from "next-auth";
 import Link from "next/link";
+import { Toaster } from 'sonner'
 
 export default async function Home() {
   const fetchSession = async (): Promise<null | Session | undefined> => {
@@ -19,6 +20,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col items-center gap-2">
+      <Toaster />
       <div className="text-4xl text-rose-500">HOME</div>
       <Link href={"/login"}><Button>Sign in</Button></Link>
       <SignOut />

@@ -1,12 +1,11 @@
 import NextAuth from "next-auth";
-// import {PrismaAdapter} from "@auth/prisma-adapter"
-// import { prisma } from "./db"
+import {PrismaAdapter} from "@auth/prisma-adapter"
+import { prismaInstance } from "./prisma"
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
-// import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prismaInstance),
   providers: [
     GitHub,
     Google,
