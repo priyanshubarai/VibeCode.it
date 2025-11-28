@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { signIn } from "@/lib/auth";
 import { Chromium, Github } from "lucide-react";
 import Link from "next/link";
-import { login } from "@/lib/action/user";
+import { Login } from "@/lib/action/user";
 
 export function SignInForm() {
   return (
@@ -32,7 +30,7 @@ export function SignInForm() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form id="login-form" action={login}>
+        <form id="login-form" action={Login}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>

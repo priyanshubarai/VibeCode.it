@@ -1,14 +1,16 @@
 "use server";
 import { redirect } from "next/navigation";
 import { prismaInstance } from "../prisma";
+import { CredentialsSignin } from "next-auth";
+import { signIn } from "../auth";
 
 export const Register = async (formdata: FormData) => {
   const username = formdata.get("username") as string;
   const email = formdata.get("email") as string;
   const password = formdata.get("password") as string;
 
-  if(!username || !email || !password){
-    console.log("Fields are missing!")
+  if (!username || !email || !password) {
+    console.log("Fields are missing!");
     return;
   }
 
@@ -20,10 +22,10 @@ export const Register = async (formdata: FormData) => {
       },
     });
     if (user) {
-      console.log("user already exist : ",user);
+      console.log("user already exist : ", user);
       redirect("/login");
-    }else{
-        console.log("No user Found!")
+    } else {
+      console.log("No user Found!");
     }
   } catch (err) {
     console.error("error in searching user : ", err);
@@ -44,27 +46,17 @@ export const Register = async (formdata: FormData) => {
   redirect("/login");
 };
 
-export const login = async (formdata: FormData) => {
-  const email = formdata.get("email") as string
-  const password = formdata.get("password") as string
+export const Login = async (formdata: FormData) => {
+  const email = formdata.get("email") as string;
+  const password = formdata.get("password") as string;
 
-  if( !email || !password){
-    console.log("Fields are missing!")
-    return;
-  }
-  let user = null
+  console.log("email : ",email)
+  console.log("password : ",password)
+
   try {
-    user = await prismaInstance.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-    if (user && user.hashedPassword == password) {
-        
-    }else{
-        console.log("Invalid Credentials!")
-    }
+    const res = await signIn("credentials",formdata);
+    console.log("auth response : ",res)
   } catch (err) {
-    console.error("User not Found");
+    console.log("error in auth signing in : ",err)
   }
 };
