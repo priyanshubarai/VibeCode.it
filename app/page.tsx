@@ -1,9 +1,9 @@
-import SignIn from "@/components/custom/signin-button";
 import SignOut from "@/components/custom/signout-button";
 import UserAvatar from "@/components/custom/userAvatar";
+import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import type { Session } from "next-auth";
-// import useAuthStore from "@/lib/useAuthStore";
+import Link from "next/link";
 
 export default async function Home() {
   const fetchSession = async (): Promise<null | Session | undefined> => {
@@ -11,7 +11,7 @@ export default async function Home() {
       const new_session: Session | null = await auth();
       return new_session;
     } catch (error) {
-      console.error("error in fetchSession in ueAuthstore: ", error);
+      console.error("error in fetchSession: ", error);
     }
   };
   const session: null | undefined | Session = await fetchSession();
@@ -20,8 +20,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="text-4xl text-rose-500">HOME</div>
-      <SignIn provider={"Github"} />
-      <SignIn provider={"Google"} />
+      <Link href={"/login"}><Button>Sign in</Button></Link>
       <SignOut />
       {session && <UserAvatar session={session} />}
     </div>
