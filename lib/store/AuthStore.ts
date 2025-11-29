@@ -7,7 +7,7 @@ import { create } from 'zustand'
 //   updateBears: (newBears) => set({ bears: newBears }),
 // }))
 
-const useAuthStore = create((set)=>({
+const useAuthStore = create(()=>({
     session : null,
     fetchSession : ()=>{
         

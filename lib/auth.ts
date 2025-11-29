@@ -5,7 +5,6 @@ import { prismaInstance } from "./prisma";
 // import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { CredentialsSignin } from "next-auth";
-import { redirect } from "next/navigation";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prismaInstance),

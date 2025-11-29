@@ -32,7 +32,7 @@ export const Register = async (formdata: FormData) => {
   }
 
   try {
-    let prismaResponse = await prismaInstance.user.create({
+    const prismaResponse = await prismaInstance.user.create({
       data: {
         name: username,
         email: email,
