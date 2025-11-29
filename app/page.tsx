@@ -1,8 +1,5 @@
 import SignOut from "@/components/custom/signout-button";
-import UserAvatar from "@/components/custom/userAvatar";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/auth";
-import type { Session } from "next-auth";
 import Link from "next/link";
 import { Toaster } from 'sonner'
 
