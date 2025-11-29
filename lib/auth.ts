@@ -5,6 +5,7 @@ import { prismaInstance } from "./prisma";
 // import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { CredentialsSignin } from "next-auth";
+import bcrypt from "bcrypt";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prismaInstance),
@@ -28,13 +29,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         const email = credentials.email as string|undefined;
         const password = credentials.password as string|undefined;
-        console.log("email : ",email)
-        console.log("password : ",password)
         if (!email || !password) {
           throw new CredentialsSignin("Fields cant be empty");
         } 
-        // logic to salt and hash password
-        // const pwHash = saltAndHashPassword(credentials.password)
         let user = null;
         try {
           user = await prismaInstance.user.findUnique({
@@ -46,19 +43,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin(`cant find user : ${err}`);
         }
         if (!user) {
-          // No user found, so this is their first attempt to login
-          // Optionally, this is also the place you could do a user registration
           throw new Error("Invalid credentials.");
         }
-        if (password != user.hashedPassword) {
+        let isSame = false
+        if(user && user.hashedPassword){
+          isSame = await bcrypt.compare(password, user?.hashedPassword); 
+        }
+        if (!isSame) {
           throw new CredentialsSignin("Password didn`t matched!");
         }
-        console.log("Auth User : ",user);
-        return user;
+        const authUser = {
+          id : user.id,
+          name : user.name,
+          email : user.email,          
+        }
+        console.log("Auth User : ",authUser);
+        return authUser;
       },
     }),
   ],
   pages:{
     signIn:'/login',
+    signOut:'/'
   }
 });

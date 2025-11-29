@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prismaInstance } from "../prisma";
 import { CredentialsSignin } from "next-auth";
 import { signIn } from "../auth";
+import bcrypt from "bcrypt";
 
 export const Register = async (formdata: FormData) => {
   const username = formdata.get("username") as string;
@@ -32,11 +33,12 @@ export const Register = async (formdata: FormData) => {
   }
 
   try {
+    const hash = await bcrypt.hash(password, 12);
     const prismaResponse = await prismaInstance.user.create({
       data: {
         name: username,
         email: email,
-        hashedPassword: password,
+        hashedPassword: hash,
       },
     });
     console.log("successfully registered: ", prismaResponse);
@@ -47,6 +49,7 @@ export const Register = async (formdata: FormData) => {
 };
 
 export const Login = async (formdata: FormData) => {
+
   const email = formdata.get("email") as string;
   const password = formdata.get("password") as string; 
   try {
