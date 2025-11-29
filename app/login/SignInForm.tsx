@@ -30,7 +30,10 @@ export function SignInForm() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form id="login-form" action={Login}>
+        <form id="login-form" action={async (formData) => {
+          "use server"
+          await Login(formData);
+        }}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
