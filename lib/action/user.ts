@@ -48,15 +48,20 @@ export const Register = async (formdata: FormData) => {
 
 export const Login = async (formdata: FormData) => {
   const email = formdata.get("email") as string;
-  const password = formdata.get("password") as string;
-
-  console.log("email : ",email)
-  console.log("password : ",password)
-
+  const password = formdata.get("password") as string; 
   try {
-    const res = await signIn("credentials",formdata);
+    const res = await signIn("credentials",{
+      redirect: false,
+      callbackUrl: '/',
+      email,
+      password
+    });
     console.log("auth response : ",res)
   } catch (err) {
     console.log("error in auth signing in : ",err)
+    const someError = err as CredentialsSignin;
+    console.log("SomeError : ",someError.cause)
+    return someError.cause;
   }
+  redirect('/');
 };

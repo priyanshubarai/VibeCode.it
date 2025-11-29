@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prismaInstance } from "./prisma";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
+// import GitHub from "next-auth/providers/github";
+// import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import { CredentialsSignin } from "next-auth";
 import { redirect } from "next/navigation";
@@ -10,9 +10,10 @@ import { redirect } from "next/navigation";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prismaInstance),
   providers: [
-    GitHub,
-    Google,
+    // GitHub,
+    // Google,
     Credentials({
+      name: 'Credentials',
       credentials: {
         email: {
           type: "email",
@@ -26,13 +27,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       authorize: async (credentials) => {
-        const email = credentials.email as string;
-        const password = credentials.password as string;
+        const email = credentials.email as string|undefined;
+        const password = credentials.password as string|undefined;
         console.log("email : ",email)
         console.log("password : ",password)
         if (!email || !password) {
           throw new CredentialsSignin("Fields cant be empty");
-        }
+        } 
         // logic to salt and hash password
         // const pwHash = saltAndHashPassword(credentials.password)
         let user = null;
@@ -54,7 +55,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin("Password didn`t matched!");
         }
         console.log("Auth User : ",user);
-        // redirect("/login");
         return user;
       },
     }),

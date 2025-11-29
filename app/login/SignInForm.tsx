@@ -37,6 +37,7 @@ export function SignInForm() {
               <Input
                 id="email"
                 type="email"
+                name="email"
                 placeholder="someone@example.com"
                 required
               />
@@ -53,6 +54,7 @@ export function SignInForm() {
               </div>
               <Input
                 id="password"
+                name="password"
                 type="password"
                 placeholder="**********"
                 required
