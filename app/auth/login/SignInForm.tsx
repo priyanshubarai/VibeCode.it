@@ -24,7 +24,7 @@ export function SignInForm() {
           Enter your email below to login to your account
         </CardDescription>
         <CardAction>
-          <Link href={"/signup"}>
+          <Link href={"/auth/signup"}>
             <Button variant="link">Sign Up</Button>
           </Link>
         </CardAction>
